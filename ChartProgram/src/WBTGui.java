@@ -213,8 +213,8 @@ public class WBTGui extends javax.swing.JFrame {
                                 .addComponent(cmbSide, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(btnWBTPERTSync, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                .addGap(184, 184, 184))
         );
         pnlWBTLayout.setVerticalGroup(
             pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,10 +571,11 @@ public class WBTGui extends javax.swing.JFrame {
                     String.valueOf(cmbLinks.getSelectedItem()),
                     String.valueOf(cmbSide.getSelectedItem()));
         }
+        txtWord.setText(String.valueOf(cmbSide.getSelectedItem()));
         //wbt.addContainerListener(wbtListener);
         wbtPane.addContainerListener(wbtListener);
         //wbtPane.update(drawing);
-        txtWord.setText("");
+        //txtWord.setText("");
         
     }//GEN-LAST:event_btnAddWordActionPerformed
 

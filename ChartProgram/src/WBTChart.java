@@ -26,10 +26,10 @@ public class WBTChart {
         int rectWidth = firstName.length() * 8;
         wbt.drawRect( xRect, 50, rectWidth, 20);
         int xString = (firstName.length() / 2) * 8;
-        wbt.drawString(firstName, (xRect + (rectWidth/2) - xString), 65);
+        wbt.drawString(firstName, (xRect + (rectWidth/2) - xString) + 5, 65);
         wbt.setColor(Color.blue);
         WBTItem firstWBTItem = new WBTItem(firstName, (xRect + (rectWidth / 2)), 
-                70);
+                70, rectWidth);
         itemList.add(firstWBTItem);
         return wbt;
     }
@@ -43,22 +43,66 @@ public class WBTChart {
                 prevWBTItem = itemList.get(i);
             }
         }
-        int y = (prevWBTItem.level + 5) * 10 + 20; 
-        if (side.equals("Left")){
-            xRect = prevWBTItem.x - 10;
-        } else if (side.equals("Right")){
-            xRect = prevWBTItem.x + 10;
-        }
+        int y = prevWBTItem.y + 40; 
         int rectWidth = firstName.length() * 8;
+        if (side.equals("Left")){
+            xRect = prevWBTItem.x - (10 + rectWidth);
+        } else if (side.equals("Right")){
+            xRect = prevWBTItem.x + (10 + rectWidth);
+        }
+        boolean coll;
+        boolean completeCheck = false;
+        WBTItem checkItem;
+        do{
+        coll = false;
+        for (int i = 0; i < itemList.size(); i ++){
+            checkItem = itemList.get(i);
+            if (checkItem.x - (checkItem.xWidth / 2) < xRect){
+                if (xRect < (checkItem.x + (checkItem.xWidth / 2))){
+                    if (side.equals("Left")){
+                        xRect = xRect - 10;
+                        coll = true;
+                    } else if (side.equals("Right")){
+                        xRect = xRect + 10;
+                        coll = true;
+                    }
+                }
+            }
+            if (checkItem.x - (checkItem.xWidth / 2) < xRect){
+                if (xRect < (checkItem.x + (checkItem.xWidth / 2))){
+                    if (side.equals("Left")){
+                        xRect = xRect - 10;
+                        coll = true;
+                    } else if (side.equals("Right")){
+                        xRect = xRect + 10;
+                        coll = true;
+                    }
+                }
+            }
+            if (checkItem.x - (checkItem.xWidth / 2) > xRect){
+                if (xRect > (checkItem.x + (checkItem.xWidth / 2))){
+                    if (side.equals("Left")){
+                        xRect = xRect - 10;
+                        coll = true;
+                    } else if (side.equals("Right")){
+                        xRect = xRect + 10;
+                        coll = true;
+                    }
+                }
+            }
+        }
+        if (coll == false) {
+            completeCheck = true;
+        }
+        } while (completeCheck == false);
         wbt.drawRect( xRect, y, rectWidth, 20);
         int xString = (firstName.length() / 2) * 8;
-        wbt.drawString(firstName, (xRect + (rectWidth/2) - xString), 65);
-        wbt.setColor(Color.blue);
-
+        wbt.drawString(firstName, (xRect + (rectWidth/2) - xString) + 5, (y + 15));
+        wbt.drawLine(prevWBTItem.x, prevWBTItem.y, xRect + rectWidth / 2, y);
         
         
         WBTItem newWBTItem = new WBTItem(firstName, (prevWBTItem.level + 1),
-                (xRect + (rectWidth / 2)), 70);
+                (xRect + (rectWidth / 2)), y + 20, rectWidth);
         itemList.add(newWBTItem);
         noOfItems = noOfItems + 1;
         return wbt;
