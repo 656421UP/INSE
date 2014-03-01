@@ -45,50 +45,41 @@ public class WBTChart {
         }
         int y = prevWBTItem.y + 40; 
         int rectWidth = firstName.length() * 8;
-        if (side.equals("Left")){
-            xRect = prevWBTItem.x - (10 + rectWidth);
-        } else if (side.equals("Right")){
-            xRect = prevWBTItem.x + (10 + rectWidth);
-        }
+        xRect = prevWBTItem.x - ((100) + rectWidth);
         boolean coll;
         boolean completeCheck = false;
         WBTItem checkItem;
         do{
         coll = false;
+        completeCheck = false;
         for (int i = 0; i < itemList.size(); i ++){
             checkItem = itemList.get(i);
-            if (checkItem.x - (checkItem.xWidth / 2) < xRect){
-                if (xRect < (checkItem.x + (checkItem.xWidth / 2))){
-                    if (side.equals("Left")){
-                        xRect = xRect - 10;
+            if (checkItem.x - (checkItem.xWidth / 2) <= xRect){
+                if (xRect <= (checkItem.x + (checkItem.xWidth / 2))){
+                        xRect = xRect + (100 / prevWBTItem.level + 1) + rectWidth;
                         coll = true;
-                    } else if (side.equals("Right")){
-                        xRect = xRect + 10;
-                        coll = true;
-                    }
                 }
             }
-            if (checkItem.x - (checkItem.xWidth / 2) < xRect){
-                if (xRect < (checkItem.x + (checkItem.xWidth / 2))){
-                    if (side.equals("Left")){
-                        xRect = xRect - 10;
+            if (checkItem.x - (checkItem.xWidth / 2) >= xRect){
+                if (xRect >= (checkItem.x + (checkItem.xWidth / 2))){
+                        xRect = xRect + (100  / prevWBTItem.level + 1) + rectWidth;
                         coll = true;
-                    } else if (side.equals("Right")){
-                        xRect = xRect + 10;
+                }
+            if (checkItem.x - (checkItem.xWidth / 2) <= xRect + rectWidth){
+                if (xRect + rectWidth <= (checkItem.x + (checkItem.xWidth / 2))){
+                        xRect = xRect + (100  / prevWBTItem.level + 1) + rectWidth;
                         coll = true;
-                    }
                 }
             }
-            if (checkItem.x - (checkItem.xWidth / 2) > xRect){
-                if (xRect > (checkItem.x + (checkItem.xWidth / 2))){
-                    if (side.equals("Left")){
-                        xRect = xRect - 10;
+            if (checkItem.x - (checkItem.xWidth / 2) >= xRect + rectWidth){
+                if (xRect + rectWidth >= (checkItem.x + (checkItem.xWidth / 2))){
+                        xRect = xRect + (100  / prevWBTItem.level + 1) + rectWidth;
                         coll = true;
-                    } else if (side.equals("Right")){
-                        xRect = xRect + 10;
-                        coll = true;
-                    }
                 }
+            }
+            if (xRect < 10) {
+                xRect = xRect + (100  / prevWBTItem.level + 1) + rectWidth;
+            }
             }
         }
         if (coll == false) {

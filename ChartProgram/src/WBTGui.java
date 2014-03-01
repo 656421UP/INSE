@@ -55,6 +55,8 @@ public class WBTGui extends javax.swing.JFrame {
         cmbSide = new javax.swing.JComboBox();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txaErrors = new javax.swing.JTextArea();
         pnlPERT = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnAddToChart = new javax.swing.JButton();
@@ -183,6 +185,8 @@ public class WBTGui extends javax.swing.JFrame {
         wbtPane.setEditable(false);
         wbtPane.setEnabled(false);
         wbtPane.setFocusable(false);
+        wbtPane.setRequestFocusEnabled(false);
+        wbtPane.setVerifyInputWhenFocusTarget(false);
         jScrollPane2.setViewportView(wbtPane);
 
         cmbSide.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Left", "Right" }));
@@ -191,27 +195,36 @@ public class WBTGui extends javax.swing.JFrame {
 
         jLabel18.setText("Side from target");
 
+        txaErrors.setColumns(20);
+        txaErrors.setRows(5);
+        jScrollPane3.setViewportView(txaErrors);
+
         javax.swing.GroupLayout pnlWBTLayout = new javax.swing.GroupLayout(pnlWBT);
         pnlWBT.setLayout(pnlWBTLayout);
         pnlWBTLayout.setHorizontalGroup(
             pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlWBTLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAddWord, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlWBTLayout.createSequentialGroup()
+                .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlWBTLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cmbLinks, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtWord, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                .addComponent(cmbSide, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addComponent(btnWBTPERTSync, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnAddWord, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlWBTLayout.createSequentialGroup()
+                                    .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel18)
+                                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(pnlWBTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cmbLinks, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtWord, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                        .addComponent(cmbSide, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnWBTPERTSync, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnlWBTLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                 .addGap(184, 184, 184))
@@ -237,7 +250,9 @@ public class WBTGui extends javax.swing.JFrame {
                         .addComponent(btnAddWord)
                         .addGap(18, 18, 18)
                         .addComponent(btnWBTPERTSync)
-                        .addGap(0, 350, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 248, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -560,16 +575,20 @@ public class WBTGui extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEarlyStartActionPerformed
 
     private void btnAddWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWordActionPerformed
-        wordList.add(txtWord.getText());
-        cmbLinks.addItem(txtWord.getText());
         wbt = wbtPane.getGraphics();
         int containerWidth = wbtPane.getWidth();
-        if (wordList.size() == 1){
-            wbt = workBreakdownTree.addFirst(txtWord.getText(), wbt, containerWidth);
+        if (wordList.contains(txtWord.getText())){
+            txaErrors.setText("That word has already been entered");
         } else {
-            wbt = workBreakdownTree.add(txtWord.getText(), wbt, containerWidth,
-                    String.valueOf(cmbLinks.getSelectedItem()),
-                    String.valueOf(cmbSide.getSelectedItem()));
+            wordList.add(txtWord.getText());
+            cmbLinks.addItem(txtWord.getText());
+            if (wordList.size() == 1){
+                wbt = workBreakdownTree.addFirst(txtWord.getText(), wbt, containerWidth);
+            } else {
+                wbt = workBreakdownTree.add(txtWord.getText(), wbt, containerWidth,
+                        String.valueOf(cmbLinks.getSelectedItem()),
+                        String.valueOf(cmbSide.getSelectedItem()));
+            }
         }
         txtWord.setText(String.valueOf(cmbSide.getSelectedItem()));
         //wbt.addContainerListener(wbtListener);
@@ -683,12 +702,14 @@ public class WBTGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuItem mnuOpen;
     private javax.swing.JPanel pnlGANTT;
     private javax.swing.JPanel pnlPERT;
     private javax.swing.JPanel pnlWBT;
+    private javax.swing.JTextArea txaErrors;
     private javax.swing.JTextField txtEarlyEnd;
     private javax.swing.JTextField txtEarlyStart;
     private javax.swing.JTextField txtGANTTEndDate;
